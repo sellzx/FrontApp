@@ -8,7 +8,6 @@ const styles = Styles;
 
 const RegisterScreen = ({ navigation }) => {
  
-    const registrationForm = <RegistrationForm />;
     return (
       <View style={styles.container}>
           <RegistrationForm />

@@ -12,11 +12,31 @@ const Styles = StyleSheet.create({
     marginVertical: 10,
     width: '80%',
   },
+  iconButton: {
+    alignItems: 'center',
+  },
+  iconText: {
+    marginTop: 10,
+    color: '#333',
+    fontWeight: 'bold',
+  },
   headerPika: {
     flex: 0.5,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#6C63FF',
+  },
+  headerHome: {
+    flex: 0.1,
+    flexWrap: 'wrap',
+    flexDirection: 'column',
+    alignContent: 'flex-end',
+    backgroundColor: '#6C63FF',
+  },
+  iconContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between', 
+    padding: 16 
   },
   title: {
     fontSize: 24,
@@ -85,6 +105,17 @@ const Styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 16,
     textAlign: 'center',
+  },
+  tabIcon: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderRadius: 50,
+    padding: 10,
+    marginBottom: 10,
+  },
+  tabIconFocused: {
+    backgroundColor: '#fbc02d',
   },
 });
 

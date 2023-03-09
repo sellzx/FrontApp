@@ -70,7 +70,7 @@ export default function RegistrationForm() {
 
   return (
     <>
-    <View style={styles.form}>
+     <View style={styles.form}>
         <TextInput 
           style={styles.input} 
           inputMode="email" 
@@ -100,8 +100,8 @@ export default function RegistrationForm() {
       <TouchableOpacity style={styles.button} onPress={handleFormSubmit}>
             <Text style={styles.buttonText}>Register</Text>
       </TouchableOpacity>
-    </View>
-    <Modal animationType="none" visible={modalVisible} transparent={true}>
+      </View>
+      <Modal animationType="none" visible={modalVisible} transparent={true}>
         <View style={styles.modalBackground}>
           <Animated.View style={[styles.modalContent, { opacity: fadeAnim }]}>
             <Text style={styles.modalText}>Usuario Registrado!</Text>

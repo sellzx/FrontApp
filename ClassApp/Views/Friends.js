@@ -7,7 +7,7 @@ import RegistrationForm from '../Models/RegistrationForm';
 
 const styles = Styles;
 
-const HomeScreen = ({navigation}) => {
+const FriendsScreen = ({navigation}) => {
     const [imageUri, setImageUri] = useState(null);
 
     
@@ -41,19 +41,19 @@ const HomeScreen = ({navigation}) => {
       }
     };
 
-    const handleFriends = async () => {
-      navigation.navigate("Friends")
+    const handleHome = async () => {
+        navigation.navigate("Home")
     };
 
     const handleChats = async () => {
-      navigation.navigate("Chats")
-    };
+        navigation.navigate("Chats")
+      };
     
     return (
       <View style={styles.container}>
         <View style={styles.iconContainer}>
           <TouchableOpacity style={styles.iconButton}>
-            <Ionicons name="people-outline" size={30} color="#333" onPress={handleFriends} />
+            <Ionicons name="people-outline" size={30} color="#333" />
             <Text style={styles.iconText}>Requests</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.iconButton}>
@@ -61,7 +61,7 @@ const HomeScreen = ({navigation}) => {
             <Text style={styles.iconText}>Photo</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.iconButton}>
-            <Ionicons name="home-outline" size={30} color="#333" />
+            <Ionicons name="home-outline" size={30} color="#333" onPress={handleHome} />
             <Text style={styles.iconText}>Home</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.iconButton}>
@@ -78,4 +78,4 @@ const HomeScreen = ({navigation}) => {
     );
   };
 
-  export default HomeScreen;
+  export default FriendsScreen;
