@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 import { Input, Button } from 'react-native-elements';
 import  Styles from '../assets/Styles'
 import RegistrationForm from '../Models/RegistrationForm';
@@ -19,22 +19,13 @@ const RegisterScreen = ({ navigation }) => {
     return (
       <>
       <View style={styles.container}>
-        <View style={styles.inputContainer}>
+        <View style={styles.form}>
           {registrationForm}
+          <TouchableOpacity style={styles.button} onPress={handleRegister}>
+              <Text style={styles.buttonText}>Register</Text>
+            </TouchableOpacity>
         </View>
-        <Button
-          title="Register"
-          onPress={handleRegister}
-          buttonStyle={styles.button}
-          titleStyle={styles.buttonText}
-        />
       </View>
-      <Modal visible={modalVisible} animationType="slide">
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Text>Success!</Text>
-          <Button title="OK" onPress={() => setModalVisible(false)} />
-        </View>
-      </Modal>
       </>
     );
   };

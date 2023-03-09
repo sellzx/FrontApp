@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { TextInput } from 'react-native';
+import Styles from '../assets/Styles';
 
 class RegistrationForm extends Component {
   constructor(props) {
@@ -41,11 +42,13 @@ class RegistrationForm extends Component {
     return (
       <>
         <TextInput
+          style={styles.input}
           placeholder="Email"
           onChangeText={this.handleEmailChange}
           value={this.state.email}
         />
         <TextInput
+          style={styles.input}
           placeholder="Password"
           onChangeText={this.handlePasswordChange}
           value={this.state.password}
@@ -53,11 +56,13 @@ class RegistrationForm extends Component {
         />
         <TextInput
           placeholder="Name"
+          style={styles.input}
           onChangeText={this.handleNameChange}
           value={this.state.name}
         />
         <TextInput
           placeholder="Last Name"
+          style={styles.input}
           onChangeText={this.handleLastNameChange}
           value={this.state.lastName}
         />
@@ -65,5 +70,7 @@ class RegistrationForm extends Component {
     );
   }
 }
+
+const styles = Styles;
 
 export default RegistrationForm;

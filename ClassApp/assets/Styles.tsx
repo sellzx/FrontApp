@@ -3,9 +3,7 @@ import { StyleSheet } from 'react-native';
 const Styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#14171A',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#fff',
   },
   inputContainer: {
     backgroundColor: '#192734',
@@ -14,20 +12,63 @@ const Styles = StyleSheet.create({
     marginVertical: 10,
     width: '80%',
   },
+  headerPika: {
+    flex: 0.5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#6C63FF',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#fff',
+  },
+  form: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+  },
   input: {
-    color: 'white',
+    height: 50,
+    width: '100%',
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    marginBottom: 10,
   },
   button: {
-    backgroundColor: '#1DA1F2',
-    borderRadius: 30,
-    padding: 10,
-    width: '80%',
+    height: 50,
+    width: '100%',
+    backgroundColor: '#FDD835',
+    borderRadius: 10,
+    justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: 10,
+    marginTop: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+    elevation: 4,
   },
   buttonText: {
-    color: 'white',
+    color: '#333',
+    fontSize: 18,
     fontWeight: 'bold',
+    textShadowColor: '#FFEB3B',
+    textShadowOffset: {
+      width: 1,
+      height: 1,
+    },
+    textShadowRadius: 2,
+  },
+  image: {
+    width: 200,
+    height: 200,
   },
 });
 
