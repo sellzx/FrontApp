@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from './Views/LoginScreen';
 import RegisterScreen from './Views/RegisterScreen';
+import HomeScreen from './Views/HomeScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
@@ -10,7 +11,7 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login"       
+      <Stack.Navigator initialRouteName="SnapPkm"       
         screenOptions={{
           headerStyle: {
             backgroundColor: '#6C63FF',
@@ -21,8 +22,9 @@ export default function App() {
             fontSize: 24,
           },
         }}>
-        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="SnapPkm" component={LoginScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
+        <Stack.Screen name="Home" component={HomeScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

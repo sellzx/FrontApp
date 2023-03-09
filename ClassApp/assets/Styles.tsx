@@ -70,6 +70,22 @@ const Styles = StyleSheet.create({
     width: 200,
     height: 200,
   },
+  modalBackground: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    padding: 16,
+  },
+  modalText: {
+    fontSize: 20,
+    marginBottom: 16,
+    textAlign: 'center',
+  },
 });
 
 export default Styles;
