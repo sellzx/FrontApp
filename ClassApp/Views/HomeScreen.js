@@ -3,28 +3,14 @@ import { StyleSheet, Text, View, Button, Image, TouchableOpacity } from 'react-n
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import  Styles from '../assets/Styles'
-import RegistrationForm from '../Models/RegistrationForm';
+import handleSelectImagePress from '../Services/HandlerImage'
+import AuthContext, { AuthProvider } from '../Services/AuthContext';
 
 const styles = Styles;
 
 const HomeScreen = ({navigation}) => {
+    const { userAuthenticated, username, handleLogout } = React.useContext(AuthContext);
     const [imageUri, setImageUri] = useState(null);
-
-    
-    const handleSelectImagePress = async () => {
-      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-      
-      if (status !== 'granted') {
-        alert('Sorry, we need camera roll permissions to make this work!');
-        return;
-      }
-      
-      const result = await ImagePicker.launchImageLibraryAsync();
-      
-      if (!result.cancelled) {
-        setImageUri(result.uri);
-      }
-    };
     
     const handleTakePicturePress = async () => {
       const { status } = await ImagePicker.requestCameraPermissionsAsync();
@@ -53,28 +39,27 @@ const HomeScreen = ({navigation}) => {
       <View style={styles.container}>
         <View style={styles.iconContainer}>
           <TouchableOpacity style={styles.iconButton}>
-            <Ionicons name="people-outline" size={30} color="#333" onPress={handleFriends} />
+            <Ionicons name="people-outline" size={30} color="#a3d4ff" onPress={handleFriends} />
             <Text style={styles.iconText}>Requests</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.iconButton}>
-            <Ionicons name="camera-outline" size={30} color="#333" onPress={handleTakePicturePress}/>
+            <Ionicons name="camera-outline" size={30} color="#a3d4ff" onPress={handleTakePicturePress}/>
             <Text style={styles.iconText}>Photo</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.iconButton}>
-            <Ionicons name="home-outline" size={30} color="#333" />
+            <Ionicons name="home-outline" size={30} color="#a3d4ff" />
             <Text style={styles.iconText}>Home</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.iconButton}>
-            <Ionicons name="images-outline" size={30} color="#333" onPress={handleSelectImagePress}/>
+            <Ionicons name="images-outline" size={30} color="#a3d4ff" onPress={() => handleSelectImagePress(username)}/>
             <Text style={styles.iconText}>Image</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.iconButton}>
-            <Ionicons name="chatbubble-outline" size={30} color="#333" onPress={handleChats}/>
+            <Ionicons name="chatbubble-outline" size={30} color="#a3d4ff" onPress={handleChats}/>
             <Text style={styles.iconText}>Chats</Text>
           </TouchableOpacity>
-        </View>
+        </View >
       </View>
-      
     );
   };
 

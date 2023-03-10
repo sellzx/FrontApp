@@ -3,9 +3,9 @@ import { StyleSheet, View, Text, Image, TextInput, TouchableOpacity, Animated, M
 import { Input, Button } from 'react-native-elements';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import axios from 'axios';
+import AuthContext, { AuthProvider } from '../Services/AuthContext';
 import Styles from '../assets/Styles';
-import ApiRoute from '../Services/Routes'
+import handleLoginf from '../Services/HandleLogin';
 
 const LoginScreen = ({navigation}) => {
     const [email, setEmail] = useState('');
@@ -14,9 +14,12 @@ const LoginScreen = ({navigation}) => {
     const [modalVisibleErr, setmodalVisibleErr] = useState(false);
     const [fadeAnim] = useState(new Animated.Value(0));
     const [fadeErr] = useState(new Animated.Value(0));
+    const [alert, setApiResponse] = useState('');
+    const { handleLogin } = React.useContext(AuthContext);
   
-    const handleLogin = async () => {
+    const handleLoginMod = async () => {
       if (!email || !password) {
+        setApiResponse("Email y contraseña requeridos!");
         setmodalVisibleErr(true);
         Animated.timing(fadeErr, {
           toValue: 1,
@@ -25,21 +28,27 @@ const LoginScreen = ({navigation}) => {
         }).start();
         return;
       }
-      console.log(`Email: ${email}, Password: ${password}`);
-      try {
-        const response = await axios.get(`${api}Login/Login?email=${email}&password=${password}`);
-        if (response.data.success) {
-          setModalVisible(true);
-          Animated.timing(fadeAnim, {
-            toValue: 1,
-            duration: 1000,
-            useNativeDriver: true,
-          }).start();
-          navigation.navigate("Home");
-        }
-      } catch (error) {
-        console.error(error);
+      const response = await handleLoginf(email,password);
+      setApiResponse(response.message);
+      if (response.success) {
+        setModalVisible(true);
+        Animated.timing(fadeAnim, {
+          toValue: 1,
+          duration: 1000,
+          useNativeDriver: true,
+        }).start();
+        handleLogin(email);
+        navigation.navigate("Home");
+      } else {
+        setmodalVisibleErr(true);
+        Animated.timing(fadeErr, {
+          toValue: 1,
+          duration: 1000,
+          useNativeDriver: true,
+        }).start();
+        return;
       }
+
     };
   
     const handleRegister = () => {
@@ -47,7 +56,6 @@ const LoginScreen = ({navigation}) => {
     };
 
     const handleModalClose = () => {
-      // Reset state and hide modal
       setModalVisible(false);
       setmodalVisibleErr(false);
       setEmail('');
@@ -80,7 +88,7 @@ const LoginScreen = ({navigation}) => {
               onChangeText={setPassword}
               value={password}
             />
-            <TouchableOpacity style={styles.button} onPress={handleLogin}>
+            <TouchableOpacity style={styles.button} onPress={handleLoginMod}>
               <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={handleRegister}>
@@ -99,7 +107,7 @@ const LoginScreen = ({navigation}) => {
       <Modal animationType="none" visible={modalVisibleErr} transparent={true}>
         <View style={styles.modalBackground}>
           <Animated.View style={[styles.modalContent, { opacity: fadeErr }]}>
-            <Text style={styles.modalText}>Email y contraseña requeridos!</Text>
+            <Text style={styles.modalText}>{alert}</Text>
             <Button title="OK" onPress={handleModalClose} />
           </Animated.View>
         </View>
@@ -109,6 +117,5 @@ const LoginScreen = ({navigation}) => {
   };
   
   const styles = Styles;
-  const api = ApiRoute;
 
   export default LoginScreen;

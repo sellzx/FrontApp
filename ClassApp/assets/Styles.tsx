@@ -16,9 +16,11 @@ const Styles = StyleSheet.create({
     alignItems: 'center',
   },
   iconText: {
-    marginTop: 10,
-    color: '#333',
+    fontSize: 11,
     fontWeight: 'bold',
+    color: '#a3d4ff',
+    textAlign: 'center',
+    textTransform: 'uppercase'
   },
   headerPika: {
     flex: 0.5,
@@ -36,7 +38,9 @@ const Styles = StyleSheet.create({
   iconContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between', 
-    padding: 16 
+    padding: 16,
+    borderBottomWidth: 0.1,
+    borderBottomColor: "#333", 
   },
   title: {
     fontSize: 24,
