@@ -78,28 +78,14 @@ const HomeScreen = ({navigation}) => {
     
     return (
       <View style={styles.container}>
-        <View style={styles.iconContainer}>
-          <TouchableOpacity style={styles.iconButton}>
-            <Ionicons name="people-outline" size={30} style={styles.iconButton.tabIcon} onPress={handleFriends} />
-            <Text style={styles.iconText}>Requests</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.iconButton}>
-            <Ionicons name="camera-outline" size={30} style={styles.iconButton.tabIcon} onPress={() => handleTakePicturePress(username)}/>
-            <Text style={styles.iconText}>Photo</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.iconButton}>
-            <Ionicons name="home-outline" size={30} style={styles.iconButton.tabIcon} onPress={() => homeHandler()}/>
-            <Text style={styles.iconText}>Home</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.iconButton}>
-            <Ionicons name="images-outline" size={30} style={styles.iconButton.tabIcon} onPress={() => handleSelectImagePress(username)}/>
-            <Text style={styles.iconText}>Image</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.iconButton}>
-            <Ionicons name="chatbubble-outline" size={30} style={styles.iconButton.tabIcon} onPress={handleChats}/>
-            <Text style={styles.iconText}>Chats</Text>
-          </TouchableOpacity>
-        </View >
+      <View style={styles.iconContainer}>
+        <TouchableOpacity onPress={() => handleTakePicturePress(username)}>
+          <Ionicons name="camera-outline" size={25} style={styles.iconButton.tabIcon} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => handleSelectImagePress(username)}>
+          <Ionicons name="images-outline" size={25} style={styles.iconButton.tabIcon} />
+        </TouchableOpacity>
+      </View>
         <ScrollView>
           <ItemList items={items}/>
         </ScrollView>

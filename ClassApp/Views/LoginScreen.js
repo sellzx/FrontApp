@@ -31,7 +31,6 @@ const LoginScreen = ({navigation}) => {
       setApiResponse(response.message);
       if (response.success) {
         handleLogin(email);
-        navigation.navigate("Home");
       } else {
         setmodalVisibleErr(true);
         Animated.timing(fadeErr, {

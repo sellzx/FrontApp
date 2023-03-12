@@ -47,9 +47,7 @@ const Styles = StyleSheet.create({
   iconContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between', 
-    padding: 16,
-    borderBottomWidth: 0.1,
-    borderBottomColor: "#333", 
+    padding: 16 
   },
   title: {
     fontSize: 24,

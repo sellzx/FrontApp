@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
   const handleLogin = (username) => {
     setUserAuthenticated(true);
     setUsername(username);
-    const poke = Math.floor(Math.random() * 151) + 1 ;
+    const poke = Math.floor(Math.random() * 150) + 1 ;
     setPokemon(poke.toString())
   };
 
