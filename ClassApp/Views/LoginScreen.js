@@ -10,7 +10,6 @@ import handleLoginf from '../Services/HandleLogin';
 const LoginScreen = ({navigation}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [modalVisible, setModalVisible] = useState(false);
     const [modalVisibleErr, setmodalVisibleErr] = useState(false);
     const [fadeAnim] = useState(new Animated.Value(0));
     const [fadeErr] = useState(new Animated.Value(0));
@@ -31,12 +30,6 @@ const LoginScreen = ({navigation}) => {
       const response = await handleLoginf(email,password);
       setApiResponse(response.message);
       if (response.success) {
-        setModalVisible(true);
-        Animated.timing(fadeAnim, {
-          toValue: 1,
-          duration: 1000,
-          useNativeDriver: true,
-        }).start();
         handleLogin(email);
         navigation.navigate("Home");
       } else {
@@ -56,11 +49,9 @@ const LoginScreen = ({navigation}) => {
     };
 
     const handleModalClose = () => {
-      setModalVisible(false);
       setmodalVisibleErr(false);
       setEmail('');
       setPassword('');
-      fadeAnim.setValue(0);
       fadeErr.setValue(0);
     };
   
@@ -96,14 +87,6 @@ const LoginScreen = ({navigation}) => {
             </TouchableOpacity>
           </View>
       </View>
-      <Modal animationType="none" visible={modalVisible} transparent={true}>
-        <View style={styles.modalBackground}>
-          <Animated.View style={[styles.modalContent, { opacity: fadeAnim }]}>
-            <Text style={styles.modalText}>Login Correcto!</Text>
-            <Button title="OK" onPress={handleModalClose} />
-          </Animated.View>
-        </View>
-      </Modal>
       <Modal animationType="none" visible={modalVisibleErr} transparent={true}>
         <View style={styles.modalBackground}>
           <Animated.View style={[styles.modalContent, { opacity: fadeErr }]}>

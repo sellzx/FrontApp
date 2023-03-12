@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Button, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import  Styles from '../assets/Styles'
 import handleTakePicturePress from '../Services/HandlerPhoto';
@@ -17,7 +18,7 @@ const HomeScreen = ({navigation}) => {
     const [imageUris, setImageUris] = useState([]);
     const [items, setItems] = useState([]);
 
-    
+    const isFocused = useIsFocused();
     const ItemList = ({ items }) => {
       return (
         <View>
@@ -29,14 +30,17 @@ const HomeScreen = ({navigation}) => {
     };
 
     useEffect(() => {
+      if (isFocused) {
       console.log(pokemon)
       fetch(`${api}Image/GetAllPosts?username=${username}`)
         .then((response) => response.json())
         .then((data) => setItems(data));
-    }, []);
+      }
+    }, [isFocused]);
 
     useEffect(() => {
       if (items.length > 0) {
+        setImageUris([]);
         items.forEach(item => {
           fetchImageUri(item.url)
         });
@@ -54,7 +58,6 @@ const HomeScreen = ({navigation}) => {
           reader.readAsDataURL(response.data);
         });
         setImageUris(prevUris => [...prevUris, localUri]);
-        console.log(imageUris);
       } catch (error) {
         console.error(error);
       }

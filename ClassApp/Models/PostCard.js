@@ -20,7 +20,7 @@ const PostCard = ({ post, imageUri, pokemon }) => {
           <Text style={styles.username}>{post.userName}</Text>
         </View>
       </View>
-      <Image style={styles.image} source={ imageUri } />
+      <Image style={styles.image} source={ {uri: imageUri} } />
       <TouchableOpacity onPress={handleLikePress} style={styles.likeContainer}>
         <Icon name='heart' type='font-awesome' color='#ff6b6b' size={20} />
         <Text style={styles.likesText}> Likes</Text>

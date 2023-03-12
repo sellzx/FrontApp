@@ -21,11 +21,9 @@ const handleTakePicturePress = async (username) => {
         if (!result.cancelled) {
             try {
               const response = await axios.post(`${api}Image/PostImage`, {
-                image: result.base64,
+                image: result.assets[0].base64,
                 owner: username  
               });
-          
-              const data = await response.json();
               
               console.log(data);
             } catch (error) {
