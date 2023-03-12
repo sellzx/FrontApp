@@ -1,30 +1,15 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Button, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import * as ImagePicker from 'expo-image-picker';
 import  Styles from '../assets/Styles'
-import RegistrationForm from '../Models/RegistrationForm';
 import handleSelectImagePress from '../Services/HandlerImage'
+import AuthContext, { AuthProvider } from '../Services/AuthContext';
+import handleTakePicturePress from '../Services/HandlerPhoto';
 
 const styles = Styles;
 
 const ChatScreen = ({navigation}) => {
-    const [imageUri, setImageUri] = useState(null);
-    
-    const handleTakePicturePress = async () => {
-      const { status } = await ImagePicker.requestCameraPermissionsAsync();
-      
-      if (status !== 'granted') {
-        alert('Se necesitan permisos de camara para funcionar!');
-        return;
-      }
-      
-      const result = await ImagePicker.launchCameraAsync();
-      
-      if (!result.cancelled) {
-        setImageUri(result.uri);
-      }
-    };
+    const { userAuthenticated, username, handleLogout } = React.useContext(AuthContext);
 
     const handleHome = async () => {
         navigation.navigate("Home")
@@ -38,28 +23,30 @@ const ChatScreen = ({navigation}) => {
       <View style={styles.container}>
         <View style={styles.iconContainer}>
           <TouchableOpacity style={styles.iconButton}>
-            <Ionicons name="people-outline" size={30} color="#a3d4ff" onPress={handleFriends}/>
+          <Ionicons name="people-outline" size={30} style={styles.iconButton.tabIcon} onPress={handleFriends} />
             <Text style={styles.iconText}>Requests</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.iconButton}>
-            <Ionicons name="camera-outline" size={30} color="#a3d4ff" onPress={handleTakePicturePress}/>
+            <Ionicons name="camera-outline" size={30} style={styles.iconButton.tabIcon} onPress={handleTakePicturePress}/>
             <Text style={styles.iconText}>Photo</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.iconButton}>
-            <Ionicons name="home-outline" size={30} color="#a3d4ff" onPress={handleHome} />
+            <Ionicons name="home-outline" size={30} style={styles.iconButton.tabIcon} onPress={handleHome} />
             <Text style={styles.iconText}>Home</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.iconButton}>
-            <Ionicons name="images-outline" size={30} color="#a3d4ff" onPress={handleSelectImagePress}/>
+            <Ionicons name="images-outline" size={30} style={styles.iconButton.tabIcon} onPress={() => handleSelectImagePress(username)}/>
             <Text style={styles.iconText}>Image</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.iconButton}>
-            <Ionicons name="chatbubble-outline" size={30} color="#a3d4ff" />
+            <Ionicons name="chatbubble-outline" size={30} style={styles.iconButton.tabIcon} />
             <Text style={styles.iconText}>Chats</Text>
           </TouchableOpacity>
         </View>
+        <ScrollView>
+          
+        </ScrollView>
       </View>
-      
     );
   };
 

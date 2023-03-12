@@ -1,32 +1,66 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button, Image, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, Button, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import * as ImagePicker from 'expo-image-picker';
 import  Styles from '../assets/Styles'
-import handleSelectImagePress from '../Services/HandlerImage'
+import handleTakePicturePress from '../Services/HandlerPhoto';
+import handleSelectImagePress from '../Services/HandlerImage';
+import PostCard from '../Models/PostCard';
 import AuthContext, { AuthProvider } from '../Services/AuthContext';
+import axios from 'axios';
+import ApiRoute from '../Services/Routes';
 
+const api = ApiRoute;
 const styles = Styles;
 
 const HomeScreen = ({navigation}) => {
-    const { userAuthenticated, username, handleLogout } = React.useContext(AuthContext);
-    const [imageUri, setImageUri] = useState(null);
+    const { userAuthenticated, username, pokemon, handleLogout } = React.useContext(AuthContext);
+    const [imageUris, setImageUris] = useState([]);
+    const [items, setItems] = useState([]);
+
     
-    const handleTakePicturePress = async () => {
-      const { status } = await ImagePicker.requestCameraPermissionsAsync();
-      
-      if (status !== 'granted') {
-        alert('Se necesitan permisos de camara para funcionar!');
-        return;
-      }
-      
-      const result = await ImagePicker.launchCameraAsync();
-      
-      if (!result.cancelled) {
-        setImageUri(result.uri);
-      }
+    const ItemList = ({ items }) => {
+      return (
+        <View>
+          {items.map((item,i) => (
+            <PostCard key={item.url} post={item} imageUri={imageUris[i]} pokemon={pokemon}></PostCard>
+          ))}
+        </View>
+      );
     };
 
+    useEffect(() => {
+      console.log(pokemon)
+      fetch(`${api}Image/GetAllPosts?username=${username}`)
+        .then((response) => response.json())
+        .then((data) => setItems(data));
+    }, []);
+
+    useEffect(() => {
+      if (items.length > 0) {
+        items.forEach(item => {
+          fetchImageUri(item.url)
+        });
+      }
+    }, [items]);
+
+
+    const fetchImageUri = async (url) => {
+      try {
+        const response = await axios.get(`${api}Image/GetImage?url=${url}`,  {responseType: 'blob'});
+        const localUri = await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result);
+          reader.onerror = reject;
+          reader.readAsDataURL(response.data);
+        });
+        setImageUris(prevUris => [...prevUris, localUri]);
+        console.log(imageUris);
+      } catch (error) {
+        console.error(error);
+      }
+
+    }
+    
     const handleFriends = async () => {
       navigation.navigate("Friends")
     };
@@ -34,31 +68,38 @@ const HomeScreen = ({navigation}) => {
     const handleChats = async () => {
       navigation.navigate("Chats")
     };
+
+    const homeHandler = async () => {
+      navigation.navigate("Home")
+    };
     
     return (
       <View style={styles.container}>
         <View style={styles.iconContainer}>
           <TouchableOpacity style={styles.iconButton}>
-            <Ionicons name="people-outline" size={30} color="#a3d4ff" onPress={handleFriends} />
+            <Ionicons name="people-outline" size={30} style={styles.iconButton.tabIcon} onPress={handleFriends} />
             <Text style={styles.iconText}>Requests</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.iconButton}>
-            <Ionicons name="camera-outline" size={30} color="#a3d4ff" onPress={handleTakePicturePress}/>
+            <Ionicons name="camera-outline" size={30} style={styles.iconButton.tabIcon} onPress={() => handleTakePicturePress(username)}/>
             <Text style={styles.iconText}>Photo</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.iconButton}>
-            <Ionicons name="home-outline" size={30} color="#a3d4ff" />
+            <Ionicons name="home-outline" size={30} style={styles.iconButton.tabIcon} onPress={() => homeHandler()}/>
             <Text style={styles.iconText}>Home</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.iconButton}>
-            <Ionicons name="images-outline" size={30} color="#a3d4ff" onPress={() => handleSelectImagePress(username)}/>
+            <Ionicons name="images-outline" size={30} style={styles.iconButton.tabIcon} onPress={() => handleSelectImagePress(username)}/>
             <Text style={styles.iconText}>Image</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.iconButton}>
-            <Ionicons name="chatbubble-outline" size={30} color="#a3d4ff" onPress={handleChats}/>
+            <Ionicons name="chatbubble-outline" size={30} style={styles.iconButton.tabIcon} onPress={handleChats}/>
             <Text style={styles.iconText}>Chats</Text>
           </TouchableOpacity>
         </View >
+        <ScrollView>
+          <ItemList items={items}/>
+        </ScrollView>
       </View>
     );
   };

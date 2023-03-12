@@ -14,13 +14,22 @@ const Styles = StyleSheet.create({
   },
   iconButton: {
     alignItems: 'center',
+    tabIcon: {
+      color: '#a3d4ff',
+    },
   },
   iconText: {
     fontSize: 11,
     fontWeight: 'bold',
     color: '#a3d4ff',
     textAlign: 'center',
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
+    textShadowColor: '#ccc',
+    textShadowOffset: {
+      width: 1,
+      height: 1,
+    },
+    textShadowRadius: 2,
   },
   headerPika: {
     flex: 0.5,
@@ -109,18 +118,7 @@ const Styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 16,
     textAlign: 'center',
-  },
-  tabIcon: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    borderRadius: 50,
-    padding: 10,
-    marginBottom: 10,
-  },
-  tabIconFocused: {
-    backgroundColor: '#fbc02d',
-  },
+  }
 });
 
 export default Styles;
