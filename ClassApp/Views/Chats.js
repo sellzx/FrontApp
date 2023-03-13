@@ -11,14 +11,6 @@ const styles = Styles;
 const ChatScreen = ({navigation}) => {
     const { userAuthenticated, username, handleLogout } = React.useContext(AuthContext);
 
-    const handleHome = async () => {
-        navigation.navigate("Home")
-    };
-
-    const handleFriends = async () => {
-        navigation.navigate("Friends")
-    };  
-    
     return (
       <View style={styles.container}>
         <ScrollView>

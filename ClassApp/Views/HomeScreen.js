@@ -64,18 +64,6 @@ const HomeScreen = ({navigation}) => {
 
     }
     
-    const handleFriends = async () => {
-      navigation.navigate("Friends")
-    };
-
-    const handleChats = async () => {
-      navigation.navigate("Chats")
-    };
-
-    const homeHandler = async () => {
-      navigation.navigate("Home")
-    };
-    
     return (
       <View style={styles.container}>
       <View style={styles.iconContainer}>
