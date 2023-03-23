@@ -11,7 +11,6 @@ const LoginScreen = ({navigation}) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [modalVisibleErr, setmodalVisibleErr] = useState(false);
-    const [fadeAnim] = useState(new Animated.Value(0));
     const [fadeErr] = useState(new Animated.Value(0));
     const [alert, setApiResponse] = useState('');
     const { handleLogin } = React.useContext(AuthContext);

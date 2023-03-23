@@ -116,7 +116,55 @@ const Styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 16,
     textAlign: 'center',
-  }
+  },
+  friendList: {
+    marginTop: 10,
+    maxHeight: 150,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+  },
+  dropdownTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 5,
+    },
+  dropdown: {
+    width: 200,
+    marginBottom: 10,
+    },
+  buttons: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    },
+  chatButton: {
+    backgroundColor: '#5cb85c',
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    },
+  deleteButton: {
+    backgroundColor: '#d9534f',
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    },
+  acceptButton: {
+    backgroundColor: '#5cb85c',
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    },
+  declineButton: {
+    backgroundColor: '#d9534f',
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    },
+  buttonTextDrop: {
+    color: 'white',
+    fontWeight: 'bold',
+    },
 });
 
 export default Styles;
