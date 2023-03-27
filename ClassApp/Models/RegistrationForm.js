@@ -74,7 +74,7 @@ export default function RegistrationForm() {
         <TextInput 
           style={styles.input} 
           inputMode="email" 
-          placeholder="Email"
+          placeholder="UserName"
           onChangeText={setEmail}
           value={email}
         />

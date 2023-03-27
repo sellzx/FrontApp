@@ -18,16 +18,15 @@ const AddFriend = ({ username }) => {
                 Requester: username,
                 Requested: user
               });
-            if (response.data.success) {
-                setApiResponse(response.data.message);
-                setmodalVisibleErr(true);
-                Animated.timing(fadeErr, {
-                  toValue: 1,
-                  duration: 1000,
-                  useNativeDriver: true,
-                }).start();
-                return;
-            }
+
+            setApiResponse(response.data.message);
+            setmodalVisibleErr(true);
+            Animated.timing(fadeErr, {
+                toValue: 1,
+                duration: 1000,
+                useNativeDriver: true,
+            }).start();
+            return;
         }
     };
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useIsFocused } from '@react-navigation/native';
-import { StyleSheet, Text, View, Button, Image, TouchableOpacity, ScrollView, Picker  } from 'react-native';
+import { StyleSheet, Text, View, Button, Animated, Modal, TouchableOpacity, ScrollView  } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import handleTakePicturePress from '../Services/HandlerPhoto';
 import  Styles from '../assets/Styles'
@@ -8,18 +8,18 @@ import ApiRoute from '../Services/Routes';
 import handleSelectImagePress from '../Services/HandlerImage'
 import AuthContext, { AuthProvider } from '../Services/AuthContext';
 import AddFriend from '../Models/AddFriend';
-import FriendsDropDown from '../Models/FriendsDropDown';
+import FriendsRequest from '../Models/FriendsRequest';
+import * as HandleFriends from '../Services/HandleFriends';
 
 const styles = Styles;
 const api = ApiRoute;
 
-const FriendsScreen = ({navigation,title, data, onChat, onDelete}) => {
+const FriendsScreen = ({navigation}) => {
     const { userAuthenticated, username, handleLogout } = React.useContext(AuthContext);
     const [friends, setFriends] = useState([]);
     const [requests, setRequests] = useState([]);
     const isFocused = useIsFocused();
-    const [showOptions, setShowOptions] = useState(false);
-    const [selectedFriend, setSelectedFriend] = useState(null);
+    const [fadeErr] = useState(new Animated.Value(0));
 
     useEffect(() => {
       if (isFocused) {
@@ -28,19 +28,17 @@ const FriendsScreen = ({navigation,title, data, onChat, onDelete}) => {
         .then((data) => setFriends(data));
       fetch(`${api}Friends/Requests?user=${username}`)
         .then((response) => response.json())
-        .then((data) => setRequests(data));        
+        .then((data) => {if (data != '') {
+          setRequests(data)
+        } else  setRequests([])});        
       }
     }, [isFocused]);
 
-    
-
-    const handleSelectOption = (option) => {
-      setSelectedOption(option);
-      setShowOptions(false);
-    };
-
-    const handleFriendChange = (friend) => {
-      setSelectedFriend(friend);
+    const handleModalClose = () => {
+      setmodalVisibleErr(false);
+      setEmail('');
+      setPassword('');
+      fadeErr.setValue(0);
     };
 
 
@@ -48,7 +46,7 @@ const FriendsScreen = ({navigation,title, data, onChat, onDelete}) => {
       <View style={styles.container}>
         <AddFriend username={username} />
         <ScrollView>
-          <FriendsDropDown friends={friends} />
+          <FriendsRequest friends={requests} username={username}/>
         </ScrollView>
       </View>
       
