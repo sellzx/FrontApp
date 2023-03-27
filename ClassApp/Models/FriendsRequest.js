@@ -5,6 +5,8 @@ import ApiRoute from '../Services/Routes';
 import axios from 'axios';
 import UserItem from '../Models/UserItem';
 
+const styles = Styles;
+
 const FriendsRequest = ({friends, username}) => {
     const [fadeEr] = useState(new Animated.Value(0));
     const [modalVisibleErr, setmodalVisibleErr] = useState(false);
@@ -41,7 +43,7 @@ const FriendsRequest = ({friends, username}) => {
   
     return (
       <View style={{ flex: 1 }}>
-        <Text style={{ fontWeight: 'bold', fontSize: 24, paddingHorizontal: 16, paddingTop: 16 }}>Friends requests</Text>
+        <Text style={{ fontWeight: 'bold', fontSize: 24, paddingHorizontal: 16, paddingTop: 16 }}>Friend requests</Text>
         <FlatList
           data={friends}
           renderItem={({ item }) => (
