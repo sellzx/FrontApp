@@ -1,16 +1,16 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-const UserItem = ({ username, onAccept, onDecline }) => {
+const FriendItem = ({ username, onAccept, onDecline }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.username}>{username}</Text>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={[styles.button, styles.acceptButton]} onPress={onAccept}>
-          <Text style={styles.buttonText}>Aceptar</Text>
+          <Text style={styles.buttonText}>Chat</Text>
         </TouchableOpacity>
         <TouchableOpacity style={[styles.button, styles.declineButton]} onPress={onDecline}>
-          <Text style={styles.buttonText}>Rechazar</Text>
+          <Text style={styles.buttonText}>Eliminar</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -60,4 +60,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UserItem;
+export default FriendItem;

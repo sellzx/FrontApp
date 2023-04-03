@@ -9,6 +9,7 @@ import handleSelectImagePress from '../Services/HandlerImage'
 import AuthContext, { AuthProvider } from '../Services/AuthContext';
 import AddFriend from '../Models/AddFriend';
 import FriendsRequest from '../Models/FriendsRequest';
+import FriendsList from '../Models/FriendsList';
 import * as HandleFriends from '../Services/HandleFriends';
 
 const styles = Styles;
@@ -47,6 +48,7 @@ const FriendsScreen = ({navigation}) => {
         <AddFriend username={username} />
         <ScrollView>
           <FriendsRequest friends={requests} username={username}/>
+          <FriendsList friends={friends} username={username}/>
         </ScrollView>
       </View>
       

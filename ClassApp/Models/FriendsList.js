@@ -3,30 +3,23 @@ import { View, TextInput, FlatList, Text, Animated, Modal, Button } from 'react-
 import Styles from '../assets/Styles';
 import ApiRoute from '../Services/Routes';
 import axios from 'axios';
-import UserItem from '../Models/UserItem';
+import FriendItem from './FriendItem';
 import * as HandleFriends from '../Services/HandleFriends'
+
 
 const styles = Styles;
 
-const FriendsRequest = ({friends, username}) => {
+const FriendsList = ({friends, username}) => {
     const [fadeEr] = useState(new Animated.Value(0));
     const [modalVisibleErr, setmodalVisibleErr] = useState(false);
     const [alert, setApiResponse] = useState('');
 
-    const handleAccept = async (item) => {
-      const response = await HandleFriends.handleAccept(username,item);
-      setApiResponse(response.data.message);
-      setmodalVisibleErr(true);
-      Animated.timing(fadeErr, {
-          toValue: 1,
-          duration: 1000,
-          useNativeDriver: true,
-      }).start();
-      return;
+    const handleAccept = (item) => {
+      //navegar al chat con este item
     };
   
     const handleDecline = async (item) => {
-      const response = await HandleFriends.handleReject(username,item);
+      const response = await HandleFriends.handleDelete(username,item);
       setApiResponse(response.data.message);
       setmodalVisibleErr(true);
       Animated.timing(fadeErr, {
@@ -44,11 +37,11 @@ const FriendsRequest = ({friends, username}) => {
   
     return (
       <View style={{ flex: 1 }}>
-        <Text style={{ fontWeight: 'bold', fontSize: 24, paddingHorizontal: 16, paddingTop: 16 }}>Solicitud de Amistad</Text>
+        <Text style={{ fontWeight: 'bold', fontSize: 24, paddingHorizontal: 16, paddingTop: 16 }}>Amigos</Text>
         <FlatList
           data={friends}
           renderItem={({ item }) => (
-            <UserItem
+            <FriendItem
               username={item}
               onAccept={() => handleAccept(item)}
               onDecline={() => handleDecline(item)}
@@ -67,4 +60,4 @@ const FriendsRequest = ({friends, username}) => {
       </View>
     );
   };
-export default FriendsRequest
+export default FriendsList
