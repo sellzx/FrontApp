@@ -1,7 +1,12 @@
-import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, Image, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
 import { Card, Icon } from 'react-native-elements';
+import AuthContext, { AuthProvider } from '../Services/AuthContext';
+import ApiRoute from '../Services/Routes';
+import axios from 'axios';
 
+
+const api = ApiRoute;
 const PostCard = ({ post, imageUri, pokemon }) => {
 
 
@@ -26,21 +31,66 @@ const PostCard = ({ post, imageUri, pokemon }) => {
         <Text style={styles.likesText}> Likes</Text>
       </TouchableOpacity>
       <Text style={styles.description}>{post.description}</Text>
-      {/* {coments && coments.lenght > 0 && <CommentsList coments={post.coments} />} */}
+      <CommentsList comments={post.coments} item={post.url} />
     </Card>
   );
 };
 
-const CommentsList = ({ comments }) => {
+const CommentsList = ({ comments, item }) => {
+  const { userAuthenticated, username, pokemon, handleLogout } = React.useContext(AuthContext);
+  const [commentsData, setComments] = useState([]);
+  const [newComment, setNewComment] = useState('');
+
+  const postComment = async () => {
+    try {
+      await axios.post(`${api}Posts/Post`, {
+        user: username,
+        url: item,
+        post:  newComment
+      });
+      setNewComment('');
+      fetchComments();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchComments();
+  }, []);
+
+
+  const fetchComments = async () => {
+    try {
+      fetch(`${api}Image/GetAllPosts?username=${username}`)
+        .then((response) => response.json())
+        .then((data) => setComments(response.data.coments));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+
   return (
     <View style={styles.commentsContainer}>
-      <Text style={styles.commentsTitle}>Comments:</Text>
-      {comments.map((comment) => (
-        <View key={comment.date} style={styles.commentContainer}>
-          <Text style={styles.commentUsername}>{comment.userName}:</Text>
-          <Text style={styles.commentText}>{comment.post}</Text>
-        </View>
-      ))}
+      <View>
+        <Text style={styles.likesText}>Comentarios: </Text>
+        {comments.map((comment) => (
+          <View key={comment.date} style={styles.commentContainer}>
+            <Text style={styles.commentUsername}>{comment.userName}:</Text>
+            <Text style={styles.commentText}>{comment.post}</Text>
+          </View>
+        ))}
+        <TextInput
+          placeholder="Añade un comentario "
+          value={newComment}
+          onChangeText={(text) => setNewComment(text)}
+          style={styles.input}
+        />
+        <TouchableOpacity onPress={postComment} style={styles.button}>
+          <Text style={styles.buttonText}>Post</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -112,4 +162,29 @@ const styles = StyleSheet.create({
   commentText: {
     fontSize: 12,
   },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderRadius: 5,
+    borderColor: '#ccc',
+    padding: 10,
+    marginVertical: 10
+  },
+  input: {
+    flex: 1,
+    height: 40,
+    paddingHorizontal: 10
+  },
+  button: {
+    backgroundColor: '#2a9df4',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    marginLeft: 10
+  },
+  buttonText: {
+    color: '#fff',
+    fontWeight: 'bold'
+  }
 });
